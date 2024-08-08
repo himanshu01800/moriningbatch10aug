@@ -1,5 +1,6 @@
 package com.example.use.controler;
 
+import com.example.use.dto.LoginDTO;
 import com.example.use.entity.AuthenticationResponse;
 import com.example.use.entity.Users;
 import com.example.use.service.AuthenticationService;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthenticationController {
-    @Autowired
-    private AuthenticationService authService;
 
+    private final AuthenticationService authService;
 
+    public AuthenticationController(AuthenticationService authService) {
+        this.authService = authService;
+    }
 
 
     @PostMapping("/register")
@@ -25,7 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody Users request ) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginDTO request ) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 }

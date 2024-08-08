@@ -1,5 +1,6 @@
 package com.example.use.service;
 
+import com.example.use.dto.LoginDTO;
 import com.example.use.entity.AuthenticationResponse;
 import com.example.use.entity.Users;
 import com.example.use.repository.UsersRepository;
@@ -11,15 +12,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
-    @Autowired
-    private UsersRepository repository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UsersRepository repository;
+
+    private final PasswordEncoder passwordEncoder;
+
+
+    private final JwtService jwtService;
+
+    private final AuthenticationManager authenticationManager;
+
+    public AuthenticationService(UsersRepository repository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
 
     public AuthenticationResponse register(Users request) {
         Users user = new Users();
@@ -35,7 +43,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(Users request) {
+    public AuthenticationResponse authenticate(LoginDTO request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( request.getEmail(), request.getPassword()));
         Users user=repository.findByEmail(request.getEmail());
         String token=jwtService.generateToken(user);

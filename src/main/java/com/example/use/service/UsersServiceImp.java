@@ -44,7 +44,6 @@ public class UsersServiceImp implements UserDetailsService {
         if (users1.isPresent()) {
             Users originalUsers = (Users) users1.get();
             originalUsers.setName(users.getName());
-            originalUsers.setLastname(users.getLastname());
             originalUsers.setEmail(users.getEmail());
             originalUsers.setAddress(users.getAddress());
             originalUsers.setPassword(users.getPassword());

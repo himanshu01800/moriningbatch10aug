@@ -54,7 +54,8 @@ public class JwtService {
         String token = Jwts
                 .builder()
                 .setSubject(user.getEmail())
-
+                .claim("address",user.getAddress())
+                .claim("Name",user.getName())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 24*60*60*1000 ))
                 .signWith(getSigninKey())
