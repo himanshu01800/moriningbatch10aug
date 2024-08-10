@@ -20,7 +20,12 @@ public class UsersServiceImp implements UserDetailsService {
 
 
     public Users saveUsers(Users users) {
-        return usersRepository.save(users);
+
+        Users user=new Users();
+        user.setName(users.getName());
+        user.setPassword(users.getPassword());
+        return usersRepository.save(user);
+
     }
 
 
